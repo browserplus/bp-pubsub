@@ -39,7 +39,7 @@ cmake_minimum_required(VERSION 2.6)
 SET(frameworkDir "${CMAKE_CURRENT_SOURCE_DIR}/../external/bp-service-framework")
 INCLUDE(${frameworkDir}/build_support/BuildConfigs.cmake)
  
-SET(serviceName NativePubSub)
+SET(serviceName PubSub)
  
 PROJECT(${serviceName}Service)
  

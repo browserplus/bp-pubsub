@@ -3,8 +3,8 @@
   "CoreletLibrary": "@ServiceLibrary@",
   "strings": {
     "en": {
-      "title": "Native PubSub",
-      "summary": "Native (C++) version of PubSub service."
+      "title": "PubSub",
+      "summary": "BrowserPlus Publish/Subscribe service."
     }
   }
 }

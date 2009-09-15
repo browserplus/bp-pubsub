@@ -55,7 +55,7 @@ private:
 };
 
 
-BP_SERVICE_DESC( PubSub, "NativePubSub", "1.0.0",
+BP_SERVICE_DESC( PubSub, "PubSub", "0.0.1",
                  "A cross document message service that allows JavaScript to "
                  "send and receive messages between web pages within "
                  "one or more browsers (cross document + cross process)." )
