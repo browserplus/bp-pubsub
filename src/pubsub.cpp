@@ -144,7 +144,7 @@ void PubSub::addListener( const Transaction& tran, const Map& args )
     string sAcceptOrigin = "*";
     const Object* po = args.get( "origin" );
     if (po) {
-        sAcceptOrigin = *po;
+        sAcceptOrigin = string( *po );
     }
     
     Listener lstnr( tran, args["receiver"], sAcceptOrigin );
