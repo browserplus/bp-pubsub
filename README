@@ -1,0 +1,4 @@
+This repo can be used to build a simple BrowserPlus service using the framework
+at browserplus/bp-service-framework.
+
+Instructions to build and test the service are in the file BUILDING.

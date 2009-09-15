@@ -1,0 +1,50 @@
+Setup your local repo:
+ git clone git://github.com/browserplus/bp-pubsub.git
+ cd bp-pubsub
+ git submodule init
+ git submodule update  
+
+
+This project uses cmake for crossplatform builds.  Install cmake from cmake.org.
+
+Setup make/project files:
+[OSX - makefile]
+ cd src
+ mkdir build
+ cd build
+ cmake ..
+
+[OSX - XCode]
+ cd src
+ mkdir build
+ cd build
+ cmake -G "Xcode" ..
+
+[Windows - VS08]
+ cd src
+ mkdir build
+ cd build
+ cmake -G "Visual Studio 9 2008" ..
+
+
+Build the project using generated makefile/.xcodeproj/.sln file
+
+
+Install the browserplus sdk for ServiceInstaller and ServiceRunner binaries:
+ http://browserplus.yahoo.com/developer/service/sdk/
+
+
+Publish the service on your local system:
+ build> [path to ServiceInstaller]/ServiceInstaller -v -f PubSub
+
+
+Test the service with the ServiceRunner app: 
+ [path to ServiceRunner]/ServiceRunner PubSub 0.0.1
+ > desc
+ > a
+ > i greet '{"name":"World"}'
+ > q
+
+
+Test the service from a browser:
+ http://browserplus.yahoo.com/developer/explore/test/
