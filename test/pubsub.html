@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Publish Subscribe</title>
+<style type="text/css" media="screen"> 
+#result {
+	font-family: "Consolas", "Monaco", "Courier New", Courier, monospace;
+	font-size: 8pt; background:#100e0e;	padding:4px; color:#81d83b;
+	overflow:auto; height:250px; width:450px; border:4px solid #433;
+}
+
+</style>
+</head>
+<body>
+<p>Type a message here, and see it in any and all other browsers visiting<br>
+this page (on your local computer).</p>
+ 
+<input id="msg" type="text" size="60" value="Type your message here">
+<div>
+    <input id="sendAsString" type="button" value="Send As String">
+    <input id="sendAsObject" type="button" value="Send As Object">
+    <input id="sendAsArray" type="button" value="Send As Array">
+</div>
+<br>
+<p><strong>Messages Received:</strong> (new messages on top):</p>
+<pre id="result"></pre>
+<p><a target="another" href="run.html">Open a second window</a> to get a 
+better idea of what this can do.  If you are<br> really daring, you'll 
+<a href="run.html">copy this url</a> and open it in a different browser.</p>
+    
+<script type="text/javascript" src="http://bp.yahooapis.com/2.4.17/browserplus-min.js"></script>  
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+<script type="text/javascript" src="../json2.js"></script><!-- for pretty output -->
+<script type="text/javascript">  
+(function() {
+    var YD = YAHOO.util.Dom, YE = YAHOO.util.Event, msg = YD.get("msg");
+ 
+    // function designated to receive messages
+    function receiver(val) {
+        var r = YD.get("result");
+        var str = JSON.stringify(val, null, "  ") + "\n\n" + r.innerHTML;
+
+        if(r.outerHTML) {
+    		r.outerHTML = '<pre id="result">'+str+'</pre>';
+		} else {
+			r.innerHTML = str;
+		}
+    }
+ 
+    // PUBLISH
+    function publish(e, obj) {
+        var data, str = msg.value;
+        
+        // show that multiple data types can be sent
+        if (obj === "string") {
+            data = str;
+        } else if (obj === "array") {
+            data = str.split(" ");
+        } else {
+            data = {message: str, minusone: -1, yes: true, no: false};
+        }
+ 
+        BrowserPlus.PubSub.postMessage({data:data, targetOrigin: "*"}, function(){});
+    }
+ 
+    BrowserPlus.init(function(res) {  
+        var services = {service: "PubSub"};
+            
+        if (res.success) {  
+            BrowserPlus.require({ services: [ services ]}, function(r) {
+                if (r.success) {  
+                    // SUBSCRIBE
+                    BrowserPlus.PubSub.addListener({receiver: receiver}, function() {});
+                } else {
+                    alert("Require Failed: " + r.error + ", " + r.verboseError);
+                }
+            });
+        } else {
+            alert("Init Failed: " + res.error + ", " + res.verboseError);            
+        }
+    });
+    
+    YE.addListener("sendAsString", "click", publish, "string");
+    YE.addListener("sendAsObject", "click", publish, "object");
+    YE.addListener("sendAsArray",  "click", publish, "array");
+})();
+</script>
+</body>
+</html>
+

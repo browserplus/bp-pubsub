@@ -38,13 +38,5 @@ Publish the service on your local system:
  build> [path to ServiceInstaller]/ServiceInstaller -v -f PubSub
 
 
-Test the service with the ServiceRunner app: 
- [path to ServiceRunner]/ServiceRunner PubSub 0.0.1
- > desc
- > a
- > i greet '{"name":"World"}'
- > q
-
-
-Test the service from a browser:
- http://browserplus.yahoo.com/developer/explore/test/
+Test the service:
+ open test/pubsub.html in a browser (or multiple browsers)
