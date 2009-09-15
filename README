@@ -1,4 +1,9 @@
-This repo can be used to build a simple BrowserPlus service using the framework
-at browserplus/bp-service-framework.
+This is the "native" (C++ based) BrowserPlus Publish/Subscribe service.
+
+It is heavily-based on work done by Steve Spencer.  
+See: http://github.com/sspencer/bp-pubsubgithub
+
+This repo uses bp-service-framework in order to ease service implementation. 
+See: http://github.com/browserplus/bp-service-framework
 
 Instructions to build and test the service are in the file BUILDING.
