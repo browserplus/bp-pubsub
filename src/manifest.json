@@ -1,0 +1,11 @@
+{
+  "type": "standalone",
+  "CoreletLibrary": "@ServiceLibrary@",
+  "strings": {
+    "en": {
+      "title": "Native PubSub",
+      "summary": "Native (C++) version of PubSub service."
+    }
+  }
+}
+ 
