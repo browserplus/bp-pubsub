@@ -12,7 +12,7 @@ using namespace std;
 Listener::Listener( const Transaction& tran,
                     const Object& cb,
                     const std::string& sAcceptOrigin ) :
-    m_cb( tran, dynamic_cast<const CallBack&>(cb) ),
+    m_cb( tran, cb ),
     m_sAcceptOrigin( sAcceptOrigin )
 {
 
