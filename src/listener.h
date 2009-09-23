@@ -26,4 +26,27 @@ private:
 
 
 
+inline Listener::Listener( const bplus::service::Transaction& tran,
+                           const bplus::Object& cb,
+                           const std::string& sAcceptOrigin ) :
+    m_cb( tran, cb ),
+    m_sAcceptOrigin( sAcceptOrigin )
+{
+    
+}
+
+
+inline void
+Listener::onNotify( const bplus::Map& mData )
+{
+    std::string sSourceDomain = mData["origin"];
+
+    // Extra filtering above and beyond html5.
+    if (m_sAcceptOrigin == "*" || m_sAcceptOrigin == sSourceDomain) {
+        m_cb.invoke( mData );
+    }
+}
+
+
+
 #endif
