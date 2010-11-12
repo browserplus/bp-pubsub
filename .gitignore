@@ -1,0 +1,8 @@
+*~
+/build/
+/build_codecoverage/
+/build_debug/
+/build_release/
+/external/dist/
+/unittest/providerDir
+/unittest/unittest.xml

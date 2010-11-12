@@ -34,63 +34,47 @@
 # Original Author: Lloyd Hilaiel
 #####
  
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8.1)
 
-SET(frameworkDir "${CMAKE_CURRENT_SOURCE_DIR}/../external/bp-service-framework")
-INCLUDE(${frameworkDir}/build_support/BuildConfigs.cmake)
- 
-SET(serviceName PubSub)
- 
-PROJECT(${serviceName}Service)
- 
-SET(outputDir "${CMAKE_CURRENT_BINARY_DIR}/${serviceName}")
- 
-# default to a debug build. This gets us symbols by default under
-# the cmake makefile generator
-IF (NOT CMAKE_BUILD_TYPE)
-  SET(CMAKE_BUILD_TYPE "Debug")
+SET(SERVICE_NAME "PubSub")
+PROJECT(${SERVICE_NAME}Service)
+
+INCLUDE(${CMAKE_CURRENT_SOURCE_DIR}/../external/bp-service-framework/build_support/BuildConfigs.cmake)
+
+INCLUDE_DIRECTORIES(
+  "${CMAKE_CURRENT_SOURCE_DIR}/../external/dist/include"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../external/bp-service-framework/include"
+)
+
+IF ("${CMAKE_BUILD_TYPE}" STREQUAL "CodeCoverage")
+  LINK_DIRECTORIES(
+    "${CMAKE_CURRENT_SOURCE_DIR}/../external/dist/lib"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../external/dist/lib/Debug"
+  )
+ELSE ()
+  LINK_DIRECTORIES(
+    "${CMAKE_CURRENT_SOURCE_DIR}/../external/dist/lib"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../external/dist/lib/${CMAKE_BUILD_TYPE}"
+  )
 ENDIF ()
- 
-INCLUDE_DIRECTORIES("${frameworkDir}/include")
 
-
-
-#SET(SRCS pubsub.cpp)
-#SET(HDRS pubsub.h listener.h)
-FILE(GLOB SRCS "*.cpp")
-FILE(GLOB HDRS "*.h")
-SET(OS_SRCS)
-SET(EXT_SRCS)
-
-
-#SET(SRCS service.cpp util/fileutil.cpp)
-#SET(HDRS util/bpsync.hh util/bpthread.hh)
-#IF (WIN32)
-#   FILE(GLOB OS_SRCS "util/*_Windows.cpp")
-#ELSE()
-#   FILE(GLOB OS_SRCS "util/*_Darwin.cpp" "util/*_UNIX.cpp")
-#ENDIF ()
- 
-ADD_LIBRARY(${serviceName} MODULE ${SRCS} ${HDRS} ${OS_SRCS} ${EXT_SRCS})
-
- 
-# add required OS libs here
-SET(OSLIBS)
-
-#TARGET_LINK_LIBRARIES(${serviceName} easylzma_s ${OSLIBS})
-
-# create service directory
-FILE(MAKE_DIRECTORY ${outputDir})
- 
-# copy in manifest
-GET_TARGET_PROPERTY(loc ${serviceName} LOCATION)
-GET_FILENAME_COMPONENT(ServiceLibrary "${loc}" NAME)
-CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/manifest.json"
-               "${outputDir}/manifest.json")
-ADD_CUSTOM_COMMAND(TARGET ${serviceName} POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                           \"${loc}\" \"${outputDir}\")
+# Boost libs.
+IF (WIN32)
+   # Visual Studio does some autolink magic with boost, no need
+   # to specify library
+ELSE ()
+   SET(BOOST_LIBS "boost_filesystem" "boost_system")
+ENDIF ()
+SET(OS_LIBS)
 IF (APPLE)
-  ADD_CUSTOM_COMMAND(TARGET ${serviceName} POST_BUILD
-                     COMMAND strip -x \"${outputDir}/${ServiceLibrary}\")
-ENDIF (APPLE)
+   # need carbon headers and library
+   FIND_LIBRARY(CARBON_LIBRARY Carbon)
+   MARK_AS_ADVANCED(CARBON_LIBRARY)
+   SET(OS_LIBS ${CARBON_LIBRARY})
+ENDIF() 
+SET(SRCS pubsub.cpp)
+SET(HDRS listener.h)
+SET(LIBS ${OS_LIBS})
+
+BPAddCppService()
+
