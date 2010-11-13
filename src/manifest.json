@@ -1,6 +1,7 @@
 {
   "type": "standalone",
-  "CoreletLibrary": "@ServiceLibrary@",
+  "CoreletLibrary":"@SERVICE_LIBRARY@",
+  "ServiceLibrary":"@SERVICE_LIBRARY@",
   "strings": {
     "en": {
       "title": "PubSub",
