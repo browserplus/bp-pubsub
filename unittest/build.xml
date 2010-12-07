@@ -1,3 +1,3 @@
 <project name="test" default="build_release">
-    <import file="../external/bp-service-framework/ant/unittest/build.xml" as="" prefixSeparator="" />
+    <import file="../external/bp-build-templates/ant/unittest/build.xml" as="" prefixSeparator="" />
 </project>

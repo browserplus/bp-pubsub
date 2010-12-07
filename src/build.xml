@@ -1,3 +1,3 @@
 <project name="src" default="build_release">
-    <import file="../external/bp-service-framework/ant/src/build.xml" as="" prefixSeparator="" />
+    <import file="../external/bp-build-templates/ant/src/build.xml" as="" prefixSeparator="" />
 </project>

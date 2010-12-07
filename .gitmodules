@@ -4,3 +4,6 @@
 [submodule "external/bakery"]
 	path = external/bakery
 	url = git://github.com/browserplus/bakery.git
+[submodule "external/bp-build-templates"]
+	path = external/bp-build-templates
+	url = git@bp-code.corp.yahoo.com:utility/build/bp-build-templates.git
