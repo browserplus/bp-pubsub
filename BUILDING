@@ -2,7 +2,7 @@ Setup your local repo:
  git clone git://github.com/browserplus/bp-pubsub.git
  cd bp-pubsub
  git submodule init
- git submodule update  
+ git submodule update --recursive
 
 
 This project uses cmake for crossplatform builds.  Install cmake from cmake.org.
@@ -20,11 +20,11 @@ Setup make/project files:
  cd build
  cmake -G "Xcode" ..
 
-[Windows - VS08]
+[Windows - Visual Studio]
  cd src
  mkdir build
  cd build
- cmake -G "Visual Studio 9 2008" ..
+ cmake ..
 
 
 Build the project using generated makefile/.xcodeproj/.sln file
