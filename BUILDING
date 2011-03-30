@@ -4,28 +4,12 @@ Setup your local repo:
  git submodule init
  git submodule update --recursive
 
-
 This project uses cmake for crossplatform builds.  Install cmake from cmake.org.
 
-Setup make/project files:
-[OSX - makefile]
- cd src
- mkdir build
+ cd external && ruby build.rb && cd ..
+ mkdir build 
  cd build
  cmake ..
-
-[OSX - XCode]
- cd src
- mkdir build
- cd build
- cmake -G "Xcode" ..
-
-[Windows - Visual Studio]
- cd src
- mkdir build
- cd build
- cmake ..
-
 
 Build the project using generated makefile/.xcodeproj/.sln file
 
